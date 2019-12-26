@@ -1,7 +1,7 @@
 from keras.datasets import imdb
 from keras.preprocessing import sequence
 from keras.models import Sequential
-from keras.layers import Embedding, LSTM, Dense, Dropout, BatchNormalization
+from keras.layers import Embedding, LSTM, Dense, Dropout, BatchNormalization, Conv1D, MaxPool1D
 from matplotlib import pyplot as plt
 
 top_words = 5000
@@ -16,13 +16,18 @@ embedding_vector_length = 32
 model = Sequential()
 model.add(Embedding(top_words, embedding_vector_length, input_length=max_review_length))
 model.add(BatchNormalization())
+model.add(Conv1D(64, kernel_size=3, padding='same', activation='sigmoid'))
+model.add(Dropout(0.4))
+model.add(Conv1D(32, kernel_size=3, padding='same', activation='sigmoid'))
+model.add(Dropout(0.2))
+model.add(MaxPool1D())
 model.add(LSTM(100, return_sequences=True))
 model.add(LSTM(80))
 model.add(Dense(50, activation='sigmoid'))
 model.add(Dropout(0.2))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-history = model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=10, batch_size=128, verbose=2)
+history = model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=15, batch_size=128, verbose=2)
 
 print(model.summary())
 
