@@ -38,7 +38,7 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 history = model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=15, batch_size=128, verbose=2)
 
-print(model.summary())
+model.summary()
 
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
