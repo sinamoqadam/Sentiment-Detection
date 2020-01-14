@@ -6,16 +6,16 @@ from keras.initializers import Constant
 BASE_DIR = ''
 GLOVE_DIR = os.path.join(BASE_DIR, 'glove.6B')
 # TEXT_DATA_DIR = os.path.join(BASE_DIR, '20_newsgroup')
-MAX_SEQUENCE_LENGTH = 30
+MAX_SEQUENCE_LENGTH = 50
 MAX_NUM_WORDS = 20000
-EMBEDDING_DIM = 100
+EMBEDDING_DIM = 50
 VALIDATION_SPLIT = 0.2
 
 
 def embedding_layer(word_index):
     print('Indexing word vectors.')
     embeddings_index = {}
-    with open(os.path.join(GLOVE_DIR, 'glove.6B.100d.txt')) as f:
+    with open(os.path.join(GLOVE_DIR, 'glove.6B.50d.txt')) as f:
         for line in f:
             word, coefs = line.split(maxsplit=1)
             coefs = np.fromstring(coefs, 'f', sep=' ')
